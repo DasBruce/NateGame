@@ -14,12 +14,10 @@ MapNode::MapNode(){
 	H = 0;
 	ParentDirection = NOPARENT;
 	ParentID = -1;
-	Population = 10;
+	Population = 0;
 	Traversable = true;
 	Type = EMPTY;
-	PlayerOwner = 0;
-	P1Influence = 0;
-	P2Influence = 0;
+	PlayerOwner = UNOWNED;
 }
 
 void MapNode::Init(float x, float y){
@@ -30,7 +28,11 @@ void MapNode::Init(float x, float y){
 void MapNode::Draw(){
     glPushMatrix();
         glTranslatef( x, y, 0.0f);
-		glColor3f(P1Influence, 0.36, P2Influence);
+		// glColor3f(P1Influence, 0.36, P2Influence);
+		// if(P1Influence > 0.5)
+			// glColor3f(0.7, 0, 0);
+		// else if(P2Influence > 0.5)
+			glColor3f(1, 1, 1);
         glBegin(GL_QUADS);
         glVertex3f(-0.5, 0.5, 0);
         glVertex3f( 0.5, 0.5, 0);

@@ -8,9 +8,14 @@ class City:public MapNode{
 	public:
 		City();
 		City(int Population, int PlayerOwner, int x, int y);
-		int Population;
-		void Update();
 		void Draw();
+		void Update();
+	private:
+		int FertileLand;
+		int Farms;
+		int FishingFleets;
+		float TaxRate;
+		
 };
 
 #endif

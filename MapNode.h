@@ -15,9 +15,8 @@ class MapNode{
 
 		int Type;
 		int PlayerOwner;
-		float Population;
-		float P1Influence;
-		float P2Influence;
+		int Population;
+		float EconomicInfluence[NUMPLAYERS];
 
 		void Init(float x, float y);
 		virtual void Update();

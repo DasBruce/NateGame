@@ -5,7 +5,6 @@ using namespace std;
 City::City(){
 	Population = 1000;
 	Traversable = false;
-	Type = CITY;
 }
 
 City::City(int Population, int PlayerOwner, int x, int y){
@@ -14,11 +13,17 @@ City::City(int Population, int PlayerOwner, int x, int y){
 	this->PlayerOwner = PlayerOwner;
 	this->x = x;
 	this->y = y;
-	cout << "New City founded, population = " << this->Population << endl;
+	Type = CITY;
+	FertileLand = 0;
+	Farms = 0;
+	FishingFleets = 0;
+	TaxRate = 0.01;
 }
 
 void City::Update(){
-	cout << "Updating city" << endl;
+	cout << "Population = " << (float)Population << endl;
+	// cout << "Population growth = " << 1.05-TaxRate-((float)Population/1000000) << endl;
+	Population *= (1.05-TaxRate-((float)Population/250000));//-Population/1000000);
 }
 
 void City::Draw(){

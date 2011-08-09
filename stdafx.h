@@ -12,6 +12,9 @@
 
 #include "vector3f.h"
 
+// PLAYERS
+#define NUMPLAYERS 2
+
 // PATHFINDING
 #define MAPSIZE 256
 #define WIDTH 16
@@ -30,5 +33,10 @@
 // MAP NODE TYPES
 #define EMPTY 1
 #define CITY 2
+
+#define UNOWNED -1
+
+#define OWNERSHIPTHRESHOLD 0.6
+#define OWNERSHIPLOSSTHRESHOLD 0.02
 
 #endif

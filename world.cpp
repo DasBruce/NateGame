@@ -4,6 +4,7 @@ using namespace std;
 
 World::World(){
 	cout << "Creating world" << endl;
+	cout << "Press F2 to end the turn" << endl;
 	for( int i=0; i<HEIGHT; i++){
 		for( int j=0; j<WIDTH; j++){
 			MapNodes.push_back(new EmptyLand(j, i));
@@ -13,9 +14,9 @@ World::World(){
 	start = 0;
 	finish = 14;
 
-	CreateCity(141, 10000, 1);
-	CreateCity(62, 7000, 2);
-	CreateCity(57, 7000, 2);
+	CreateCity(141, 10000, 0);
+	CreateCity(62, 7000, 1);
+	CreateCity(57, 7000, 1);
 }
 
 void World::Update(){
@@ -24,36 +25,48 @@ void World::Update(){
 
 void World::EndTurn(){
 	cout << "End Turn" << endl;
-	CalculateEconomicInfluence();
+	UpdateEconomicInfluence();
+	UpdateOwnership();
 	for(int i=0;i<MAPSIZE;i++){
 		MapNodes[i]->Update();
 	}
 }
 
-void World::CreateCity(int Index, int Population, int PlayerOwner){
-	cout << "Pop" << MapNodes[Index]->Type << endl;
-	delete MapNodes[Index];
-	MapNodes[Index] = new City(Population, PlayerOwner, xcom(Index), ycom(Index));
-	cout << "Pop" << MapNodes[Index]->Type << endl;
-	Cities.push_back(Index);
+void World::UpdateOwnership(){
+	for(int i=0;i<MAPSIZE;i++){
+		if(MapNodes[i]->PlayerOwner == UNOWNED){
+			for(int j=0;j<NUMPLAYERS;j++){
+				if(MapNodes[i]->EconomicInfluence[j] > OWNERSHIPTHRESHOLD){
+					MapNodes[i]->PlayerOwner = j;
+					cout << MapNodes[i]->PlayerOwner << endl;
+				}
+			}
+		}
+		// else{
+			// for(int j=0;j<NUMPLAYERS;j++){
+				// if(MapNodes[i]->EconomicInfluence[j] < OWNERSHIPLOSSTHRESHOLD){
+					// MapNodes[i]->PlayerOwner == j;
+				// }
+			// }
+		// }
+	}
 }
 
-void World::CalculateEconomicInfluence(){
+void World::UpdateEconomicInfluence(){
 	// Reset the EI for all nodes, NOTE: might change this later to have a historical effect
 	for(int i=0;i<MAPSIZE;i++){
-		MapNodes[i]->P1Influence = 0;
-		MapNodes[i]->P2Influence = 0;
+        for(int j=0;j<NUMPLAYERS;j++){
+            MapNodes[i]->EconomicInfluence[j] = 0;
+        }
 	}
 	// Go through all nodes and calculate distance from the cities
 	for(int i=0;i<MAPSIZE;i++){
 		for(int j=0;j<Cities.size();j++){
 			float dist = distind(i, Cities[j]);
-			cout << "Distance = " << dist;
-			cout << ", Population = " << MapNodes[Cities[j]]->Population << endl;
-			if(MapNodes[Cities[j]]->PlayerOwner == 1)
-				MapNodes[i]->P1Influence += MapNodes[Cities[j]]->Population/(10000*dist);
-			else if(MapNodes[Cities[j]]->PlayerOwner == 2)
-				MapNodes[i]->P2Influence += MapNodes[Cities[j]]->Population/(10000*dist);
+			if(MapNodes[Cities[j]]->PlayerOwner == 0)
+				MapNodes[i]->EconomicInfluence[MapNodes[Cities[j]]->PlayerOwner] += MapNodes[Cities[j]]->Population/(10000*dist);
+			else if(MapNodes[Cities[j]]->PlayerOwner == 1)
+				MapNodes[i]->EconomicInfluence[MapNodes[Cities[j]]->PlayerOwner] += MapNodes[Cities[j]]->Population/(10000*dist);
 		}
 	}
 }
@@ -219,6 +232,11 @@ int World::FindLowestF(){
 	return id;
 }
 
+void World::CreateCity(int Index, int Population, int PlayerOwner){
+	delete MapNodes[Index];
+	MapNodes[Index] = new City(Population, PlayerOwner, xcom(Index), ycom(Index));
+	Cities.push_back(Index);
+}
 
 void World::ReSizeGLScene(GLsizei width, GLsizei height){
 	if (height==0)										// Prevent A Divide By Zero By

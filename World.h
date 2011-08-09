@@ -34,7 +34,8 @@ class World{
 		bool IsInOpenList(int id);
 		bool IsInClosedList(int id);
 		void CalculateFGH(int id);
-		void CalculateEconomicInfluence();
+		void UpdateEconomicInfluence();
+		void UpdateOwnership();
 		void CalculatePath(int s, int f);
 };
 
