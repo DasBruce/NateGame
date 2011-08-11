@@ -18,6 +18,7 @@ MapNode::MapNode(){
 	Traversable = true;
 	Type = EMPTY;
 	PlayerOwner = UNOWNED;
+	Selected = false;
 }
 
 void MapNode::Init(float x, float y){
@@ -28,11 +29,20 @@ void MapNode::Init(float x, float y){
 void MapNode::Draw(){
     glPushMatrix();
         glTranslatef( x, y, 0.0f);
-		// glColor3f(P1Influence, 0.36, P2Influence);
-		// if(P1Influence > 0.5)
-			// glColor3f(0.7, 0, 0);
-		// else if(P2Influence > 0.5)
-			glColor3f(1, 1, 1);
+		glColor3f(1, 1, 1);
+        glBegin(GL_QUADS);
+        glVertex3f(-0.5, 0.5, 0);
+        glVertex3f( 0.5, 0.5, 0);
+        glVertex3f( 0.5,-0.5, 0);
+        glVertex3f(-0.5,-0.5, 0);
+        glEnd();
+    glPopMatrix();
+}
+
+void MapNode::Picking(){
+    glPushMatrix();
+        glTranslatef( x, y, 0.0f);
+		glColor3ub(PickingColour[0], PickingColour[1], PickingColour[2]);
         glBegin(GL_QUADS);
         glVertex3f(-0.5, 0.5, 0);
         glVertex3f( 0.5, 0.5, 0);

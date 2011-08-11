@@ -14,6 +14,14 @@ class World{
         void ReSizeGLScene(GLsizei width, GLsizei height);
         void Update();
 		void EndTurn();
+		void KeyDown(int KeyID, bool Down);
+
+		int GLHeight;
+		int GLWidth;
+		void Draw(int RenderMode = RENDERMODEDRAW);
+		
+		int mx;
+		int my;
     private:
 	    int prevTime;
         int diffTime;
@@ -21,13 +29,16 @@ class World{
 		int start;
 		int finish;
 
+
+		unsigned int PickingColour[3];
+		void EnsureUniquePickingColour();
+
 		std::vector<MapNode*> MapNodes;
 		std::vector<int> Cities;
 		std::vector<int> open;
 		std::vector<int> closed;
 		std::vector<int> path;
 
-		void Draw();
 		void CreateCity(int Index, int Population, int PlayerOwner);
 
 		int FindLowestF();

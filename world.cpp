@@ -3,11 +3,15 @@
 using namespace std;
 
 World::World(){
+	PickingColour[0] = 1;
+	PickingColour[0] = 1;
+	PickingColour[0] = 1;
 	cout << "Creating world" << endl;
-	cout << "Press F2 to end the turn" << endl;
+	cout << "Press Enter to end the turn" << endl;
 	for( int i=0; i<HEIGHT; i++){
 		for( int j=0; j<WIDTH; j++){
-			MapNodes.push_back(new EmptyLand(j, i));
+			EnsureUniquePickingColour();
+			MapNodes.push_back(new EmptyLand(j, i, PickingColour));
 		}
 	}
 
@@ -70,18 +74,12 @@ void World::UpdateEconomicInfluence(){
 		}
 	}
 }
-
-void World::Draw(){
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);	// Clear Screen And Depth Buffer
-	glLoadIdentity();
-	glPushMatrix();
-	glTranslatef(-WIDTH/2,-HEIGHT/2,-30.0f);
-	for( int i=0; i<MAPSIZE; i++){
-		MapNodes.at(i)->Draw();
+// Keyboard Handler
+void World::KeyDown(int KeyID, bool Down){
+	if(KeyID == VK_RETURN && Down == true){
+		EndTurn();
 	}
-    glPopMatrix();
 }
-
 // A* pathfinding
 void World::CalculatePath(int s, int f){
 // Navigate
@@ -265,3 +263,58 @@ bool World::InitGL(){
 	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);	// Really Nice Perspective Calculations
 	return true;
 }
+
+void World::Draw(int RenderMode){
+	glEnable(GL_DEPTH_TEST);
+	if(RenderMode == RENDERMODEDRAW){
+		glEnable(GL_LIGHTING);
+		glEnable(GL_LIGHT0);
+		glEnable(GL_COLOR_MATERIAL);
+	}
+	else if(RenderMode == RENDERMODEPICK){
+		glDisable(GL_LIGHTING);
+		glDisable(GL_LIGHT0);
+	}
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	glLoadIdentity();
+	glPushMatrix();
+	glTranslatef(-WIDTH/2,-HEIGHT/2,-30.0f);
+	for( int i=0; i<MAPSIZE; i++){
+		if(RenderMode == RENDERMODEDRAW){
+			MapNodes[i]->Draw();
+		}
+		else if(RenderMode == RENDERMODEPICK){
+			MapNodes[i]->Picking();
+		}
+	}
+    glPopMatrix();
+    if(RenderMode == RENDERMODEPICK){
+        unsigned char pixels[3];
+        glReadPixels(mx, GLHeight-my, 1, 1, GL_RGBA, GL_UNSIGNED_BYTE, &pixels);
+        cout << "[" << (int)pixels[0] << ", " << (int)pixels[1] << ", " << (int)pixels[2] << "]" << endl;
+        for( int i=0; i<MAPSIZE; i++){
+            if((int)pixels[0] == MapNodes[i]->PickingColour[0] && (int)pixels[1] == MapNodes[i]->PickingColour[1] && (int)pixels[2] == MapNodes[i]->PickingColour[2])
+                MapNodes[i]->Selected = !MapNodes[i]->Selected;
+        }
+    }
+}
+
+void World::EnsureUniquePickingColour(){
+	PickingColour[0] += 1;
+	if(PickingColour[0] > 255){
+		PickingColour[0] = 1;
+		PickingColour[1] += 1;
+	}
+	if(PickingColour[1] > 255){
+		PickingColour[1] = 1;
+		PickingColour[2] += 1;
+	}
+	if(PickingColour[2] > 255){
+		while(true){
+			cout << "Oh shit! ";
+		}
+	}
+	cout << "[" << PickingColour[0] << ", " << PickingColour[1] << ", " << PickingColour[2] << "]" << endl;
+}
+

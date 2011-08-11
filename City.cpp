@@ -5,6 +5,7 @@ using namespace std;
 City::City(){
 	Population = 1000;
 	Traversable = false;
+	Selected = false;
 }
 
 City::City(int Population, int PlayerOwner, int x, int y){

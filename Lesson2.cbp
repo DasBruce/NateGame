@@ -23,6 +23,7 @@
 		</Build>
 		<Compiler>
 			<Add option="-D__GNUWIN32__ -W -DWIN32 -DNDEBUG -D_WINDOWS -D_MBCS" />
+			<Add directory="C:\SourceCode\Libraries\wxWidgets2.8\include" />
 		</Compiler>
 		<Linker>
 			<Add library="opengl32" />
@@ -41,8 +42,10 @@
 			<Add library="odbc32" />
 			<Add library="odbccp32" />
 		</Linker>
-		<Unit filename="BaseNode.cpp" />
-		<Unit filename="BaseNode.h" />
+		<Unit filename="City.cpp" />
+		<Unit filename="City.h" />
+		<Unit filename="EmptyLand.cpp" />
+		<Unit filename="EmptyLand.h" />
 		<Unit filename="Map.cpp" />
 		<Unit filename="Map.h" />
 		<Unit filename="MapNode.cpp" />

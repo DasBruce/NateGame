@@ -6,7 +6,8 @@
 
 class EmptyLand:public MapNode{
 	public:
-		EmptyLand(int x, int y){this->x=x; this->y=y;}
+		EmptyLand(int x, int y, unsigned int PickingColour[]);
+
 		void Draw();
 };
 

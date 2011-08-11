@@ -17,10 +17,15 @@ class MapNode{
 		int PlayerOwner;
 		int Population;
 		float EconomicInfluence[NUMPLAYERS];
+		float Fertility;
+
+		unsigned int PickingColour[3];
+		bool Selected;
 
 		void Init(float x, float y);
 		virtual void Update();
 		virtual void Draw();
+		virtual void Picking();
 		// Getters
 		// Setters
 		void SetColour(float r, float g, float b){ red=r; green=g; blue=b; }

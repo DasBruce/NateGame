@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_layout_file>
 	<ActiveTarget name="Debug" />
+	<File name="City.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="554" topLine="0" />
+	</File>
+	<File name="City.h" open="0" top="0" tabpos="0">
+		<Cursor position="205" topLine="0" />
+	</File>
+	<File name="EmptyLand.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="438" topLine="0" />
+	</File>
+	<File name="EmptyLand.h" open="0" top="0" tabpos="1">
+		<Cursor position="93" topLine="0" />
+	</File>
 	<File name="Map.cpp" open="0" top="0" tabpos="0">
 		<Cursor position="52" topLine="0" />
 	</File>
@@ -8,15 +20,18 @@
 		<Cursor position="92" topLine="0" />
 	</File>
 	<File name="MapNode.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="515" topLine="0" />
+		<Cursor position="469" topLine="13" />
 	</File>
 	<File name="MapNode.h" open="0" top="0" tabpos="0">
-		<Cursor position="352" topLine="0" />
+		<Cursor position="631" topLine="0" />
+	</File>
+	<File name="lesson2.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="10801" topLine="248" />
 	</File>
 	<File name="stdafx.h" open="0" top="0" tabpos="0">
 		<Cursor position="655" topLine="0" />
 	</File>
 	<File name="world.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="928" topLine="6" />
+		<Cursor position="2275" topLine="50" />
 	</File>
 </CodeBlocks_layout_file>
