@@ -24,8 +24,10 @@
 		<Compiler>
 			<Add option="-D__GNUWIN32__ -W -DWIN32 -DNDEBUG -D_WINDOWS -D_MBCS" />
 			<Add directory="C:\SourceCode\Libraries\wxWidgets2.8\include" />
+			<Add directory="C:\SourceCode\Libraries\glfw-2.7.1.bin.WIN32\include" />
 		</Compiler>
 		<Linker>
+			<Add library="C:\SourceCode\Libraries\glfw-2.7.1.bin.WIN32\lib-mingw\libglfw.a" />
 			<Add library="opengl32" />
 			<Add library="glu32" />
 			<Add library="glaux" />
@@ -51,6 +53,7 @@
 		<Unit filename="MapNode.cpp" />
 		<Unit filename="MapNode.h" />
 		<Unit filename="lesson2.cpp" />
+		<Unit filename="main.cpp" />
 		<Unit filename="stdafx.h" />
 		<Unit filename="vector3f.h" />
 		<Unit filename="world.cpp" />

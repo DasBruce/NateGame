@@ -21,10 +21,45 @@ World::World(){
 	CreateCity(141, 10000, 0);
 	CreateCity(62, 7000, 1);
 	CreateCity(57, 7000, 1);
+
+	TwInit(TW_OPENGL, NULL);
+
+
+
+    CityControlPanel = TwNewBar("TweakBar");
+    // TwDefine(" GLOBAL help='This example shows how to integrate AntTweakBar with GLFW and OpenGL.' "); // Message added to the help bar.
+
+    // Add 'speed' to 'bar': it is a modifable (RW) variable of type TW_TYPE_DOUBLE. Its key shortcuts are [s] and [S].
+    TwAddVarRW(CityControlPanel, "speed", TW_TYPE_DOUBLE, &speed,
+               " label='Rot speed' min=0 max=2 step=0.01 keyIncr=s keyDecr=S help='Rotation speed (turns/second)' ");
+    // Add 'wire' to 'bar': it is a modifable variable of type TW_TYPE_BOOL32 (32 bits boolean). Its key shortcut is [w].
+    TwAddVarRW(CityControlPanel, "wire", TW_TYPE_BOOL32, &wire,
+               " label='Wireframe mode' key=w help='Toggle wireframe display mode.' ");
+    // Add 'time' to 'bar': it is a read-only (RO) variable of type TW_TYPE_DOUBLE, with 1 precision digit
+    TwAddVarRO(CityControlPanel, "time", TW_TYPE_DOUBLE, &old_time, " label='Time' precision=1 help='Time (in seconds).' ");
+
+    glfwSetMouseButtonCallback(MouseHandler);
+    glfwSetMousePosCallback((GLFWmouseposfun)TwEventMousePosGLFW);
+    glfwSetMouseWheelCallback((GLFWmousewheelfun)TwEventMouseWheelGLFW);
+    glfwSetKeyCallback((GLFWkeyfun)TwEventKeyGLFW);
+    glfwSetCharCallback((GLFWcharfun)TwEventCharGLFW);
+
+	speed = 0.3;
+	wire = false;
+	old_time = 0;
+}
+
+void World::MouseHandler(int Button, int Press){
+	if(Press == GLFW_PRESS){
+		if(Button == GLFW_MOUSE_BUTTON_LEFT){
+			Draw(RENDERMODEPICK);
+		}
+	}
 }
 
 void World::Update(){
 	Draw();
+    TwDraw();
 }
 
 void World::EndTurn(){
@@ -76,9 +111,9 @@ void World::UpdateEconomicInfluence(){
 }
 // Keyboard Handler
 void World::KeyDown(int KeyID, bool Down){
-	if(KeyID == VK_RETURN && Down == true){
-		EndTurn();
-	}
+//	if(KeyID == VK_RETURN && Down == true){
+//		EndTurn();
+//	}
 }
 // A* pathfinding
 void World::CalculatePath(int s, int f){
@@ -236,35 +271,12 @@ void World::CreateCity(int Index, int Population, int PlayerOwner){
 	Cities.push_back(Index);
 }
 
-void World::ReSizeGLScene(GLsizei width, GLsizei height){
-	if (height==0)										// Prevent A Divide By Zero By
-	{
-		height=1;										// Making Height Equal One
-	}
-
-	glViewport(0,0,width,height);						// Reset The Current Viewport
-
-	glMatrixMode(GL_PROJECTION);						// Select The Projection Matrix
-	glLoadIdentity();									// Reset The Projection Matrix
-
-	// Calculate The Aspect Ratio Of The Window
-	gluPerspective(45.0f,(GLfloat)width/(GLfloat)height,0.1f,100.0f);
-
-	glMatrixMode(GL_MODELVIEW);							// Select The Modelview Matrix
-	glLoadIdentity();
-}
-
-bool World::InitGL(){
-	glShadeModel(GL_SMOOTH);							// Enable Smooth Shading
-	glClearColor(0.0f, 0.0f, 0.0f, 0.5f);				// Black Background
-	glClearDepth(1.0f);									// Depth Buffer Setup
-	glEnable(GL_DEPTH_TEST);							// Enables Depth Testing
-	glDepthFunc(GL_LEQUAL);								// The Type Of Depth Testing To Do
-	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);	// Really Nice Perspective Calculations
-	return true;
-}
 
 void World::Draw(int RenderMode){
+    // reset view matrix
+    glLoadIdentity();
+    // move view back a bit
+    glTranslatef(0, 0, -30);
 	glEnable(GL_DEPTH_TEST);
 	if(RenderMode == RENDERMODEDRAW){
 		glEnable(GL_LIGHTING);
@@ -290,9 +302,11 @@ void World::Draw(int RenderMode){
 	}
     glPopMatrix();
     if(RenderMode == RENDERMODEPICK){
-        unsigned char pixels[3];
-        glReadPixels(mx, GLHeight-my, 1, 1, GL_RGBA, GL_UNSIGNED_BYTE, &pixels);
-        cout << "[" << (int)pixels[0] << ", " << (int)pixels[1] << ", " << (int)pixels[2] << "]" << endl;
+        unsigned char pixels[] = {0, 0, 0};
+		glfwGetMousePos(&mx, &my);
+        glReadPixels(mx, 768-my, 1, 1, GL_RGBA, GL_UNSIGNED_BYTE, &pixels);
+		// cout << "Mouse = [" << mx << ", " << 768-my << "]" << endl;
+        // cout << "[" << (int)pixels[0] << ", " << (int)pixels[1] << ", " << (int)pixels[2] << "]" << endl;
         for( int i=0; i<MAPSIZE; i++){
             if((int)pixels[0] == MapNodes[i]->PickingColour[0] && (int)pixels[1] == MapNodes[i]->PickingColour[1] && (int)pixels[2] == MapNodes[i]->PickingColour[2])
                 MapNodes[i]->Selected = !MapNodes[i]->Selected;
@@ -315,6 +329,5 @@ void World::EnsureUniquePickingColour(){
 			cout << "Oh shit! ";
 		}
 	}
-	cout << "[" << PickingColour[0] << ", " << PickingColour[1] << ", " << PickingColour[2] << "]" << endl;
 }
 

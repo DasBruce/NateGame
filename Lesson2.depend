@@ -87,32 +87,30 @@
 	"stdafx.h"
 	"BaseNode.h"
 
-1313056213 c:\users\nathaniel\programming\game\stdafx.h
-	<windows.h>
-	<gl\gl.h>
-	<gl\glu.h>
+1313135442 c:\users\nathaniel\programming\game\stdafx.h
+	<GL/glfw.h>
+	<stdlib.h>
 	<list>
 	<ctime>
 	<vector>
 	<math.h>
 	<iostream>
+	<AntTweakBar.h>
 	"vector3f.h"
 
 1279171352 c:\users\nathaniel\programming\game\vector3f.h
 	"stdafx.h"
 
-1313059493 source:c:\users\nathaniel\programming\game\lesson2.cpp
-	"stdafx.h"
-	"world.h"
+1313065260 source:c:\users\nathaniel\programming\game\lesson2.cpp
 
-1313059477 c:\users\nathaniel\programming\game\world.h
+1313135702 c:\users\nathaniel\programming\game\world.h
 	"stdafx.h"
 	"MapNode.h"
 	"Utilities.h"
 	"City.h"
 	"EmptyLand.h"
 
-1313056668 source:c:\users\nathaniel\programming\game\world.cpp
+1313068169 source:c:\users\nathaniel\programming\game\world.cpp
 	"world.h"
 
 1312719690 c:\users\nathaniel\programming\game\basenode.h
@@ -140,15 +138,9 @@
 	<math.h>
 	<float.h>
 
-1312864832 source:c:\users\nathaniel\programming\game\main.cpp
-	<wx/wx.h>
-	<wx/sizer.h>
-	<wx/glcanvas.h>
-	"GLPane.h"
-	"OpenGL/glu.h"
-	"OpenGL/gl.h"
-	<GL/glu.h>
-	<GL/gl.h>
+1313135631 source:c:\users\nathaniel\programming\game\main.cpp
+	"stdafx.h"
+	"world.h"
 
 1263017622 c:\sourcecode\libraries\wxwidgets2.8\include\wx\wx.h
 	"wx/defs.h"
@@ -3600,6 +3592,17 @@
 	"stdafx.h"
 	"MapNode.h"
 
-1313059447 source:c:\users\nathaniel\programming\game\emptyland.cpp
+1313061658 source:c:\users\nathaniel\programming\game\emptyland.cpp
 	"EmptyLand.h"
+
+1313063651 c:\sourcecode\libraries\glfw-2.7.1.bin.win32\include\gl\glfw.h
+	<OpenGL/gl.h>
+	<OpenGL/glu.h>
+	<GL/gl.h>
+	<GL/glu.h>
+
+1313068418 c:\sourcecode\libraries\anttweakbar\include\anttweakbar.h
+	<stddef.h>
+	<string>
+	<string>
 

@@ -10,8 +10,7 @@
 class World{
     public:
         World();
-        bool InitGL();
-        void ReSizeGLScene(GLsizei width, GLsizei height);
+		void MouseHandler(int Button, int Press);
         void Update();
 		void EndTurn();
 		void KeyDown(int KeyID, bool Down);
@@ -29,9 +28,14 @@ class World{
 		int start;
 		int finish;
 
+		double speed;
+		bool wire;
+		double old_time;
 
 		unsigned int PickingColour[3];
 		void EnsureUniquePickingColour();
+		
+		TwBar* CityControlPanel;
 
 		std::vector<MapNode*> MapNodes;
 		std::vector<int> Cities;

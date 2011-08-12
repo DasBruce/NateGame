@@ -11,7 +11,7 @@
 		<Cursor position="438" topLine="0" />
 	</File>
 	<File name="EmptyLand.h" open="0" top="0" tabpos="1">
-		<Cursor position="93" topLine="0" />
+		<Cursor position="97" topLine="0" />
 	</File>
 	<File name="Map.cpp" open="0" top="0" tabpos="0">
 		<Cursor position="52" topLine="0" />
@@ -20,18 +20,21 @@
 		<Cursor position="92" topLine="0" />
 	</File>
 	<File name="MapNode.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="469" topLine="13" />
+		<Cursor position="430" topLine="18" />
 	</File>
 	<File name="MapNode.h" open="0" top="0" tabpos="0">
-		<Cursor position="631" topLine="0" />
+		<Cursor position="339" topLine="0" />
 	</File>
 	<File name="lesson2.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="10801" topLine="248" />
+		<Cursor position="12832" topLine="313" />
+	</File>
+	<File name="main.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="1159" topLine="39" />
 	</File>
 	<File name="stdafx.h" open="0" top="0" tabpos="0">
-		<Cursor position="655" topLine="0" />
+		<Cursor position="79" topLine="0" />
 	</File>
 	<File name="world.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="2275" topLine="50" />
+		<Cursor position="7848" topLine="256" />
 	</File>
 </CodeBlocks_layout_file>

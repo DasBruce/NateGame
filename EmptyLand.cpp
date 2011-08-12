@@ -17,7 +17,6 @@ void EmptyLand::Draw(){
 		else
 			glColor3f(EconomicInfluence[0], 0.36, EconomicInfluence[1]);
 			
-		
         glBegin(GL_QUADS);
         glVertex3f(-0.5, 0.5, 0);
         glVertex3f( 0.5, 0.5, 0);
