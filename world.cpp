@@ -18,35 +18,10 @@ World::World(){
 	start = 0;
 	finish = 14;
 
-	CreateCity(141, 10000, 0);
-	CreateCity(62, 7000, 1);
-	CreateCity(57, 7000, 1);
-
-	TwInit(TW_OPENGL, NULL);
-
-
-
-    CityControlPanel = TwNewBar("TweakBar");
-    // TwDefine(" GLOBAL help='This example shows how to integrate AntTweakBar with GLFW and OpenGL.' "); // Message added to the help bar.
-
-    // Add 'speed' to 'bar': it is a modifable (RW) variable of type TW_TYPE_DOUBLE. Its key shortcuts are [s] and [S].
-    TwAddVarRW(CityControlPanel, "speed", TW_TYPE_DOUBLE, &speed,
-               " label='Rot speed' min=0 max=2 step=0.01 keyIncr=s keyDecr=S help='Rotation speed (turns/second)' ");
-    // Add 'wire' to 'bar': it is a modifable variable of type TW_TYPE_BOOL32 (32 bits boolean). Its key shortcut is [w].
-    TwAddVarRW(CityControlPanel, "wire", TW_TYPE_BOOL32, &wire,
-               " label='Wireframe mode' key=w help='Toggle wireframe display mode.' ");
-    // Add 'time' to 'bar': it is a read-only (RO) variable of type TW_TYPE_DOUBLE, with 1 precision digit
-    TwAddVarRO(CityControlPanel, "time", TW_TYPE_DOUBLE, &old_time, " label='Time' precision=1 help='Time (in seconds).' ");
-
-    glfwSetMouseButtonCallback(MouseHandler);
-    glfwSetMousePosCallback((GLFWmouseposfun)TwEventMousePosGLFW);
-    glfwSetMouseWheelCallback((GLFWmousewheelfun)TwEventMouseWheelGLFW);
-    glfwSetKeyCallback((GLFWkeyfun)TwEventKeyGLFW);
-    glfwSetCharCallback((GLFWcharfun)TwEventCharGLFW);
-
-	speed = 0.3;
-	wire = false;
-	old_time = 0;
+	CreateCity(141, 10000, 0, string("Dunedin"));
+//    cout << MapNodes[141]->name << endl;
+	CreateCity(62, 7000, 1, string("Christchurch"));
+	CreateCity(57, 7000, 1, string("Hamilton"));
 }
 
 void World::MouseHandler(int Button, int Press){
@@ -265,9 +240,17 @@ int World::FindLowestF(){
 	return id;
 }
 
-void World::CreateCity(int Index, int Population, int PlayerOwner){
+void World::CreateCity(int Index, int Population, int PlayerOwner, string name){
+    unsigned int TempPickingColour[3];
+    TempPickingColour[0] = MapNodes[Index]->PickingColour[0];
+    TempPickingColour[1] = MapNodes[Index]->PickingColour[1];
+    TempPickingColour[2] = MapNodes[Index]->PickingColour[2];
+
 	delete MapNodes[Index];
-	MapNodes[Index] = new City(Population, PlayerOwner, xcom(Index), ycom(Index));
+	MapNodes[Index] = new City(Population, PlayerOwner, xcom(Index), ycom(Index), name);
+    MapNodes[Index]->PickingColour[0] = TempPickingColour[0];
+    MapNodes[Index]->PickingColour[1] = TempPickingColour[1];
+    MapNodes[Index]->PickingColour[2] = TempPickingColour[2];
 	Cities.push_back(Index);
 }
 
@@ -298,6 +281,7 @@ void World::Draw(int RenderMode){
 		}
 		else if(RenderMode == RENDERMODEPICK){
 			MapNodes[i]->Picking();
+
 		}
 	}
     glPopMatrix();
@@ -308,8 +292,17 @@ void World::Draw(int RenderMode){
 		// cout << "Mouse = [" << mx << ", " << 768-my << "]" << endl;
         // cout << "[" << (int)pixels[0] << ", " << (int)pixels[1] << ", " << (int)pixels[2] << "]" << endl;
         for( int i=0; i<MAPSIZE; i++){
-            if((int)pixels[0] == MapNodes[i]->PickingColour[0] && (int)pixels[1] == MapNodes[i]->PickingColour[1] && (int)pixels[2] == MapNodes[i]->PickingColour[2])
-                MapNodes[i]->Selected = !MapNodes[i]->Selected;
+            if((int)pixels[0] == MapNodes[i]->PickingColour[0] && (int)pixels[1] == MapNodes[i]->PickingColour[1] && (int)pixels[2] == MapNodes[i]->PickingColour[2]){
+                int Position[2];
+                int Size[2];
+                TwGetParam(MapNodes[i]->ControlPanel, NULL, "position", TW_PARAM_INT32, 2, Position);
+                TwGetParam(MapNodes[i]->ControlPanel, NULL, "size", TW_PARAM_INT32, 2, Size);
+                if(IsInQuad(mx, my, Position[0], Position[1], Size[0], Size[1]) == false){
+                    MapNodes[i]->Selected = !MapNodes[i]->Selected;
+                    cout << "name is " << MapNodes[i]->name << endl;
+//                    TwDefine(MapNodes[i]->name) + string(" visible=false "));   // mybar is displayed again
+                }
+            }
         }
     }
 }

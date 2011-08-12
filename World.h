@@ -18,7 +18,7 @@ class World{
 		int GLHeight;
 		int GLWidth;
 		void Draw(int RenderMode = RENDERMODEDRAW);
-		
+
 		int mx;
 		int my;
     private:
@@ -34,8 +34,6 @@ class World{
 
 		unsigned int PickingColour[3];
 		void EnsureUniquePickingColour();
-		
-		TwBar* CityControlPanel;
 
 		std::vector<MapNode*> MapNodes;
 		std::vector<int> Cities;
@@ -43,7 +41,7 @@ class World{
 		std::vector<int> closed;
 		std::vector<int> path;
 
-		void CreateCity(int Index, int Population, int PlayerOwner);
+		void CreateCity(int Index, int Population, int PlayerOwner, string name);
 
 		int FindLowestF();
 		bool IsInOpenList(int id);

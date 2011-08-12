@@ -3,6 +3,8 @@
 
 #include "stdafx.h"
 
+using namespace std;
+
 class MapNode{
     public:
         MapNode();
@@ -21,6 +23,8 @@ class MapNode{
 
 		unsigned int PickingColour[3];
 		bool Selected;
+		TwBar* ControlPanel;
+		string name;
 
 		void Init(float x, float y);
 		virtual void Update();

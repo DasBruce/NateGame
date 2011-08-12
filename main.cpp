@@ -7,17 +7,17 @@ void Init(void);
 void Shut_Down(int return_code);
 void Main_Loop(void);
 void Draw(void);
-//void MouseHandler(int Button, int Press);
+void MouseHandler(int Button, int Press);
 
 float rotate_y = 0,
       rotate_z = 0;
 const float rotations_per_tick = .2;
 
-World world;
+World *world;
 
 void MouseHandler(int Button, int Press){
     TwEventMouseButtonGLFW(Button, Press);
-    MouseHandler(Button, Press);
+    world->MouseHandler(Button, Press);
 }
 
 int main(void)
@@ -49,7 +49,15 @@ void Init(void)
 
     TwWindowSize(window_width, window_height);
 
-//	glfwSetMouseButtonCallback(MouseHandler);
+	TwInit(TW_OPENGL, NULL);
+
+    glfwSetMousePosCallback((GLFWmouseposfun)TwEventMousePosGLFW);
+    glfwSetMouseWheelCallback((GLFWmousewheelfun)TwEventMouseWheelGLFW);
+    glfwSetKeyCallback((GLFWkeyfun)TwEventKeyGLFW);
+    glfwSetCharCallback((GLFWcharfun)TwEventCharGLFW);
+	glfwSetMouseButtonCallback(MouseHandler);
+
+	world = new World();
 }
 
 void Shut_Down(int return_code)
@@ -63,8 +71,6 @@ void Main_Loop(void)
     double speed = 0.3;
     bool wire = false;
     double old_time = glfwGetTime();
-        // Initialize AntTweakBar
-
 
     while(true)
     {
@@ -83,7 +89,7 @@ void Main_Loop(void)
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 //        Draw();
-        world.Draw();
+        world->Update();
 
         glfwSwapBuffers();
     }

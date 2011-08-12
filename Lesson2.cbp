@@ -25,6 +25,7 @@
 			<Add option="-D__GNUWIN32__ -W -DWIN32 -DNDEBUG -D_WINDOWS -D_MBCS" />
 			<Add directory="C:\SourceCode\Libraries\wxWidgets2.8\include" />
 			<Add directory="C:\SourceCode\Libraries\glfw-2.7.1.bin.WIN32\include" />
+			<Add directory="C:\SourceCode\Libraries\AntTweakBar\include" />
 		</Compiler>
 		<Linker>
 			<Add library="C:\SourceCode\Libraries\glfw-2.7.1.bin.WIN32\lib-mingw\libglfw.a" />
@@ -43,6 +44,8 @@
 			<Add library="uuid" />
 			<Add library="odbc32" />
 			<Add library="odbccp32" />
+			<Add library="C:\SourceCode\Libraries\AntTweakBar\lib\AntTweakBar.lib" />
+			<Add directory="C:\SourceCode\Libraries\AntTweakBar\lib" />
 		</Linker>
 		<Unit filename="City.cpp" />
 		<Unit filename="City.h" />

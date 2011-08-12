@@ -8,6 +8,7 @@
 #include <vector>
 #include <math.h>
 #include <iostream>
+#include <string>
 #include <AntTweakBar.h>
 
 #include "vector3f.h"

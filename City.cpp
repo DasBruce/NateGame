@@ -8,7 +8,7 @@ City::City(){
 	Selected = false;
 }
 
-City::City(int Population, int PlayerOwner, int x, int y){
+City::City(int Population, int PlayerOwner, int x, int y, string name){
 	City();
 	this->Population = Population;
 	this->PlayerOwner = PlayerOwner;
@@ -19,12 +19,17 @@ City::City(int Population, int PlayerOwner, int x, int y){
 	Farms = 0;
 	FishingFleets = 0;
 	TaxRate = 0.01;
+	this->name = name.c_str();
+
+    cout << name << endl;
+	ControlPanel = TwNewBar(name.c_str());
+    TwAddVarRO(ControlPanel, "Population", TW_TYPE_UINT32, &this->Population, " label='Population' help='Current Population.' ");
 }
 
 void City::Update(){
 	cout << "Population = " << (float)Population << endl;
-	// cout << "Population growth = " << 1.05-TaxRate-((float)Population/1000000) << endl;
-	Population *= (1.05-TaxRate-((float)Population/250000));//-Population/1000000);
+	Population *= (1.05-TaxRate-((float)Population/250000));
+	cout << Population << endl;
 }
 
 void City::Draw(){
